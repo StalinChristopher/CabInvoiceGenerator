@@ -1,5 +1,7 @@
 package com.yml.CabInvoiceGenerator;
 
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Stalin Christopher
@@ -41,5 +43,17 @@ public class CabInvoiceGenerator {
 		};
 		return totalFare;
 		
+	}
+
+	public List<Double> generateInvoice(Ride[] rides) {
+		double totalFare = 0;
+		for(Ride ride : rides) {
+			totalFare += generateFare(ride.getDistance(), ride.getTime());
+		};
+		List<Double> invoice = new ArrayList<Double>();
+		invoice.add(totalFare);
+		invoice.add(Double.valueOf(rides.length));
+		invoice.add(totalFare/rides.length);
+		return invoice;
 	}
 }
