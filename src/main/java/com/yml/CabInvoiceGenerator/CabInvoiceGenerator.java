@@ -36,7 +36,7 @@ public class CabInvoiceGenerator {
 	 * @return
 	 * Method to generate aggregate fare for given array of rides
 	 */
-	public double generateAggregateFare(Ride[] rides) {
+	public double generateAggregateFare(List<Ride> rides) {
 		double totalFare = 0;
 		for(Ride ride : rides) {
 			totalFare += generateFare(ride.getDistance(), ride.getTime());
@@ -45,12 +45,12 @@ public class CabInvoiceGenerator {
 		
 	}
 
-	public Invoice generateInvoice(Ride[] rides) {
+	public Invoice generateInvoice(List<Ride> rides) {
 		double totalFare = 0;
 		for(Ride ride : rides) {
 			totalFare += generateFare(ride.getDistance(), ride.getTime());
 		};
-		Invoice invoice = new Invoice(totalFare,rides.length);
+		Invoice invoice = new Invoice(totalFare,rides.size());
 
 		return invoice;
 	}
