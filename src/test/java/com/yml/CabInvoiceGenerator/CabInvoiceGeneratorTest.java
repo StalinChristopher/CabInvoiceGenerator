@@ -31,7 +31,7 @@ public class CabInvoiceGeneratorTest {
 	public void generateFareForMultipleRides() {
 		Ride[] rides = { new Ride(10, 15), new Ride(15, 30)};
 		double aggregateFare = cabInvoiceGenerator.generateAggregateFare(rides);
-		double expectedFare = 148.0;
+		double expectedFare = 295.0;
 		Assert.assertEquals(expectedFare, aggregateFare,1e-15);
 	}
 }

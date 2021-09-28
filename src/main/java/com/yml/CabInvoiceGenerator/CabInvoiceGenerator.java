@@ -39,7 +39,7 @@ public class CabInvoiceGenerator {
 		for(Ride ride : rides) {
 			totalFare += generateFare(ride.getDistance(), ride.getTime());
 		};
-		return Math.round(totalFare / rides.length);
+		return totalFare;
 		
 	}
 }
