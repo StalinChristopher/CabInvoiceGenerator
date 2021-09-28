@@ -1,16 +1,28 @@
 package com.yml.CabInvoiceGenerator;
 
+import com.yml.CabInvoiceGenerator.CabInvoiceGenerator.RIDE;
+
 public class Ride {
 	private double distance;
 	private int time;
 	private int userID;
+	private RIDE ride;
 	
-	public Ride(int userID, double distance, int time) {
+	public Ride(int userID, RIDE ride, double distance, int time) {
 		this.distance = distance;
 		this.time = time;
 		this.userID = userID;
+		this.ride = ride;
 	}
 	
+	public RIDE getRide() {
+		return ride;
+	}
+
+	public void setRide(RIDE ride) {
+		this.ride = ride;
+	}
+
 	public int getUserID() {
 		return userID;
 	}

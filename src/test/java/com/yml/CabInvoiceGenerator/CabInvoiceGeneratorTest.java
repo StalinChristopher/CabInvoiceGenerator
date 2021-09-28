@@ -7,6 +7,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.yml.CabInvoiceGenerator.CabInvoiceGenerator.RIDE;
+
 public class CabInvoiceGeneratorTest {
 	
 	CabInvoiceGenerator cabInvoiceGenerator;
@@ -25,7 +27,7 @@ public class CabInvoiceGeneratorTest {
 	public void generatefareforgivendistanceandtime(){
 		double distance = 30;
 		int time = 40;
-		double actualFare = cabInvoiceGenerator.generateFare(distance,time);
+		double actualFare = cabInvoiceGenerator.generateFare(RIDE.NORMAL,distance,time);
 		double expectedFare = 340.0;
 		Assert.assertEquals(expectedFare, actualFare,1e-15);
 	}
@@ -35,8 +37,8 @@ public class CabInvoiceGeneratorTest {
 	 */
 	@Test
 	public void generateFareForMultipleRides() {
-		rideRepository.addRide(new Ride(1,10,15));
-		rideRepository.addRide(new Ride(1,15,30));
+		rideRepository.addRide(new Ride(1,RIDE.NORMAL,10,15));
+		rideRepository.addRide(new Ride(1,RIDE.NORMAL,15,30));
 		double aggregateFare = cabInvoiceGenerator.generateAggregateFare(rideRepository.getAllRides());
 		double expectedFare = 295.0;
 		Assert.assertEquals(expectedFare, aggregateFare,1e-15);
@@ -47,9 +49,9 @@ public class CabInvoiceGeneratorTest {
 	 */
 	@Test
 	public void generateTotalFareTotalRidesAverageFareExpectedTrue() {
-		rideRepository.addRide(new Ride(1,10,15));
-		rideRepository.addRide(new Ride(1,15,30));
-		rideRepository.addRide(new Ride(1,8,10));
+		rideRepository.addRide(new Ride(1,RIDE.NORMAL,10,15));
+		rideRepository.addRide(new Ride(1,RIDE.NORMAL,15,30));
+		rideRepository.addRide(new Ride(1,RIDE.NORMAL,8,10));
 		Invoice invoice = cabInvoiceGenerator.generateInvoice(rideRepository.getAllRides());
 		double expectedRides = 3;
 		double expectedTotalFare = 385;
@@ -59,22 +61,25 @@ public class CabInvoiceGeneratorTest {
 		Assert.assertEquals(expectedAverageFarePerRide,invoice.averageFare,0.1);
 	}
 	
+	/**
+	 * Test case for generating invoice for given userId based on ride type
+	 */
 	@Test
 	public void generateInvoiceForGivenUserID() {
-		rideRepository.addRide(new Ride(1,10,15));
-		rideRepository.addRide(new Ride(1,15,30));
-		rideRepository.addRide(new Ride(1,8,10));
-		rideRepository.addRide(new Ride(2,10,10));
-		rideRepository.addRide(new Ride(2,20,25));
-		rideRepository.addRide(new Ride(2,12,15));
-		rideRepository.addRide(new Ride(2,5,9));
+		rideRepository.addRide(new Ride(1,RIDE.NORMAL,10,15));
+		rideRepository.addRide(new Ride(1,RIDE.PREMIUM,15,30));
+		rideRepository.addRide(new Ride(1,RIDE.NORMAL,8,10));
+		rideRepository.addRide(new Ride(2,RIDE.PREMIUM,10,10));
+		rideRepository.addRide(new Ride(2,RIDE.NORMAL,20,25));
+		rideRepository.addRide(new Ride(2,RIDE.PREMIUM,12,15));
+		rideRepository.addRide(new Ride(2,RIDE.NORMAL,5,9));
 		
 		//User 1
 		Invoice invoice = cabInvoiceGenerator.generateInvoice(rideRepository.getAllRides().stream()
 				.filter(r -> r.getUserID()==1).collect(Collectors.toList()));
 		double expectedRides = 3;
-		double expectedTotalFare = 385;
-		double expectedAverageFarePerRide = 128.3;
+		double expectedTotalFare = 490;
+		double expectedAverageFarePerRide = 163.3;
 		Assert.assertEquals(expectedTotalFare, invoice.totalFare,0);
 		Assert.assertEquals(expectedRides,invoice.numberOfRides,1e-15);
 		Assert.assertEquals(expectedAverageFarePerRide,invoice.averageFare,0.1);
@@ -83,11 +88,10 @@ public class CabInvoiceGeneratorTest {
 		invoice = cabInvoiceGenerator.generateInvoice(rideRepository.getAllRides().stream()
 				.filter(r -> r.getUserID()==2).collect(Collectors.toList()));
 		expectedRides = 4;
-		expectedTotalFare = 529;
-		expectedAverageFarePerRide = 132.25;
+		expectedTotalFare = 664;
+		expectedAverageFarePerRide = 166;
 		Assert.assertEquals(expectedTotalFare, invoice.totalFare,0);
 		Assert.assertEquals(expectedRides,invoice.numberOfRides,1e-15);
 		Assert.assertEquals(expectedAverageFarePerRide,invoice.averageFare,0.1);
-		
 	}
 }
