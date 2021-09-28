@@ -1,38 +1,18 @@
 package com.yml.CabInvoiceGenerator;
+import org.junit.Assert;
+import org.junit.Test;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+public class CabInvoiceGeneratorTest {
+   
 
-/**
- * Unit test for simple App.
- */
-public class CabInvoiceGeneratorTest 
-    extends TestCase
-{
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public CabInvoiceGeneratorTest( String testName )
-    {
-        super( testName );
-    }
-
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( CabInvoiceGeneratorTest.class );
-    }
-
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
-    }
+	@SuppressWarnings("deprecation")
+	@Test
+	public void generatefareforgivendistanceandtime(){
+		CabInvoiceGenerator  cabInvoiceGenerator = new CabInvoiceGenerator();
+		double distance = 30;
+		int time = 40;
+		double actualFare = cabInvoiceGenerator.generateFare(distance,time);
+		double expectedFare = 340.0;
+		Assert.assertEquals(expectedFare, actualFare,1e-15);
+	}	
 }
