@@ -1,4 +1,7 @@
 package com.yml.CabInvoiceGenerator;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,5 +36,21 @@ public class CabInvoiceGeneratorTest {
 		double aggregateFare = cabInvoiceGenerator.generateAggregateFare(rides);
 		double expectedFare = 295.0;
 		Assert.assertEquals(expectedFare, aggregateFare,1e-15);
+	}
+	
+	/**
+	 * Test case to validate total fare, number of rides and average fare per ride
+	 */
+	@Test
+	public void generateTotalFareTotalRidesAverageFareExpectedTrue() {
+		Ride[] rides = { new Ride(10, 15), new Ride(15, 30), new Ride(8, 10)};
+		List<Double> invoice = cabInvoiceGenerator.generateInvoice(rides);
+		double expectedRides = 3;
+		double expectedTotalFare = 385;
+		double expectedAverageFarePerRide = 128.3;
+		Assert.assertEquals(expectedTotalFare, invoice.get(0),1e-15);
+		Assert.assertEquals(expectedRides,invoice.get(1),1e-15);
+		Assert.assertEquals(expectedAverageFarePerRide,invoice.get(2),0.1);
+		
 	}
 }
