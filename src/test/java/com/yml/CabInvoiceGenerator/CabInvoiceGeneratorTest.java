@@ -44,13 +44,13 @@ public class CabInvoiceGeneratorTest {
 	@Test
 	public void generateTotalFareTotalRidesAverageFareExpectedTrue() {
 		Ride[] rides = { new Ride(10, 15), new Ride(15, 30), new Ride(8, 10)};
-		List<Double> invoice = cabInvoiceGenerator.generateInvoice(rides);
+		Invoice invoice = cabInvoiceGenerator.generateInvoice(rides);
 		double expectedRides = 3;
 		double expectedTotalFare = 385;
 		double expectedAverageFarePerRide = 128.3;
-		Assert.assertEquals(expectedTotalFare, invoice.get(0),1e-15);
-		Assert.assertEquals(expectedRides,invoice.get(1),1e-15);
-		Assert.assertEquals(expectedAverageFarePerRide,invoice.get(2),0.1);
+		Assert.assertEquals(expectedTotalFare, invoice.totalFare,0);
+		Assert.assertEquals(expectedRides,invoice.numberOfRides,1e-15);
+		Assert.assertEquals(expectedAverageFarePerRide,invoice.averageFare,0.1);
 		
 	}
 }

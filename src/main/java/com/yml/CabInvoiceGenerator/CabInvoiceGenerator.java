@@ -45,15 +45,13 @@ public class CabInvoiceGenerator {
 		
 	}
 
-	public List<Double> generateInvoice(Ride[] rides) {
+	public Invoice generateInvoice(Ride[] rides) {
 		double totalFare = 0;
 		for(Ride ride : rides) {
 			totalFare += generateFare(ride.getDistance(), ride.getTime());
 		};
-		List<Double> invoice = new ArrayList<Double>();
-		invoice.add(totalFare);
-		invoice.add(Double.valueOf(rides.length));
-		invoice.add(totalFare/rides.length);
+		Invoice invoice = new Invoice(totalFare,rides.length);
+
 		return invoice;
 	}
 }
