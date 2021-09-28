@@ -14,9 +14,7 @@ public class CabInvoiceGenerator {
     
     public double generateFare(double distance, int time) {
     	double fare = 0;
-    	double distanceFare = distance * 10;
-    	double timeFare = time * 1;
-    	fare = distanceFare + timeFare;
+    	fare = (distance *10) + (time * 1);
     	if( fare < 5) {
     		fare = MIN_FARE;
     	}
